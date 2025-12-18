@@ -86,6 +86,24 @@ To create a PostgreSQL database, you need to first connect to the PostgreSQL ser
    GRANT ALL PRIVILEGES ON DATABASE piscineds TO your_login;
    ```
    Replace `your_login` with your actual student login.
+   
+   **Important Note:** `GRANT ALL PRIVILEGES ON DATABASE` grants database-level privileges (connect, create schemas, etc.) but does **not** grant schema-level privileges needed to create tables. In PostgreSQL, database privileges and schema privileges are separate. To allow the user to create tables, you also need to grant schema permissions:
+   ```sql
+   GRANT USAGE ON SCHEMA public TO your_login;
+   GRANT CREATE ON SCHEMA public TO your_login;
+   ```
+   Alternatively, you can change the database ownership, which automatically includes schema permissions:
+   ```sql
+   ALTER DATABASE piscineds OWNER TO your_login;
+   ```
+   
+   **Note on changing ownership:** If you change ownership, you need to disconnect and reconnect to the database for the change to take full effect. After running `ALTER DATABASE`, exit psql (`\q`) and reconnect as the new owner to verify the change.
+   
+   **Note on connecting as default user:** To run `ALTER DATABASE` or grant schema permissions, you need to connect as the database owner. If you installed PostgreSQL via Homebrew on macOS, the default user is your system username (the user who installed it, e.g., `stefano`). You can check who owns the database with `\l+ piscineds`. To connect as the default user (your system username), simply omit the `-U` flag:
+   ```bash
+   psql -d piscineds -h localhost
+   ```
+   When prompted for a password, just press Enter (the default user has no password).
 
 7. **Verify the permissions have been granted:**
    ```sql
