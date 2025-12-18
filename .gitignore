@@ -1,9 +1,17 @@
+# macOS
 .DS_Store
+**/.DS_Store
+
+# Data directories
 customer/
 item/
+
+# Environment files
 ex02/.env
 ex03/.env
 ex04/.env
+
+# Virtual environments
 venv/
 ex03/venv/
 ex04/venv
