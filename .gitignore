@@ -1,3 +1,8 @@
-data/
+customer/
+item/
 ex02/.env
-
+ex03/.env
+ex04/.env
+venv/
+ex03/venv/
+ex04/venv
